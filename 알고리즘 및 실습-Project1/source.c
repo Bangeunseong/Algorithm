@@ -3136,7 +3136,7 @@ int main() {
 	BellmanFordShortestPaths(G, key);
 }*/
 //과제
-#include <stdio.h>
+/*#include <stdio.h>
 #include <stdlib.h>
 #pragma warning(disable:4996)
 typedef struct vertex {
@@ -3268,4 +3268,4 @@ int main() {
 		DijkstraShortestPaths(G, src, dest, 0, &min, &cnt);
 		printf("%c, %c : 최단거리 =  %d, 최단경로 수 = %d\n", src, dest, min, cnt);
 	}
-}
+}*/

@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graph.c" />
     <ClCompile Include="HashTable.c" />
     <ClCompile Include="TreeADT.c" />
     <ClCompile Include="source.c" />

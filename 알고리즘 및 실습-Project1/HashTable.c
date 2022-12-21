@@ -146,3 +146,112 @@ int main() {
 	}
 }*/
 //-----------------------------------------이중 해싱(3)
+/*//Initialize BucketArray
+void initBucketArray(int **L, int M) {
+	*L = (int *)malloc(sizeof(int)*M);
+	for (int i = 0; i < M; i++) (*L)[i] = 0;
+}
+//Hash Functions
+int SecondHashFunction(int key, int Q) { return Q - (key % Q); }
+int FirstHashFunction(int key, int M, int Q, int i) { return ((key % M + i * SecondHashFunction(key, Q))) % M; }
+//Get The next Bucket
+int getNextBucket(int key, int M, int Q, int i) { return FirstHashFunction(key, M, Q, i); }
+//Overflow Exception
+int overflowException(int *L, int M, int N) {
+	int cnt = 0;
+	for (int i = 0; i < M; i++) if (L[i] != 0) cnt++;
+	if (cnt > N) return 1;
+	return 0;
+}
+//----------------Search Func------------------
+int findElement(int *L, int M, int Q, int key) {
+	int i = 0;
+	while (i < M) {
+		int nextBucket = getNextBucket(key, M, Q, i);
+		if (L[nextBucket] == 0) return -1;
+		else if (L[nextBucket] == key) { printf("%d ", nextBucket); return L[nextBucket]; }
+		else i++;
+	}
+}
+//----------------Insert Func------------------
+void insertItem(int *L, int M, int N, int Q, int key) {
+	if (overflowException(L, M, N)) return;
+	int i = 0;
+	while (i < M) {
+		int nextBucket = getNextBucket(key, M, Q, i);
+		if (L[nextBucket] == 0) { L[nextBucket] = key; printf("%d\n", nextBucket); return; }
+		else { printf("C"); i++; }
+	}
+}
+//----------Print List-----------
+void printList(int *L, int M) {
+	for (int i = 0; i < M; i++) printf(" %d", L[i]);
+	printf("\n");
+}
+//Main
+int main() {
+	int *L = NULL; int M, N, Q; scanf("%d %d %d", &M, &N, &Q); getchar();
+	initBucketArray(&L, M);
+	while (1) {
+		char ch; int key; scanf("%c", &ch);
+		switch (ch) {
+		case 'i': scanf("%d", &key); insertItem(L, M, N, Q, key); break;
+		case 's': scanf("%d", &key); printf("%d\n", findElement(L, M, Q, key)); break;
+		case 'p': printList(L, M); break;
+		case 'e': printList(L, M); free(L); return 0;
+		}
+		getchar();
+	}
+}*/
+//-----------------------------------비활성화 방식(선형 조사법)
+/*#include <stdio.h>
+#include <stdlib.h>
+#pragma warning(disable:4996)
+void InitHashTable(int **HashTable, int M) {
+	*HashTable = (int *)malloc(sizeof(int)*M);
+	for (int i = 0; i < M; i++) (*HashTable)[i] = 0;
+}
+int getNextBucket(int v, int M, int i) { return (v + i) % M; }
+void InsertItem(int *HashTable, int M, int key) {
+	int v = key % M;
+	int i = 0;
+	while (i < M) {
+		int nextBucket = getNextBucket(v, M, i);
+		if (HashTable[nextBucket] <= 0) { printf("%d\n", nextBucket); HashTable[nextBucket] = key; return; }
+		else { printf("C"); i++; }
+	}
+}
+int SearchKey(int *HashTable, int M, int key) {
+	int v = key % M;
+	int i = 0;
+	while (i < M) {
+		int nextBucket = getNextBucket(v, M, i);
+		if (HashTable[nextBucket] == 0) return -1;
+		else if (HashTable[nextBucket] == key) { printf("%d ", nextBucket); return HashTable[nextBucket]; }
+		else i++;
+	}
+}
+int DeactivateKey(int *HashTable, int M, int key) {
+	int v = key % M;
+	int i = 0;
+	while (i < M) {
+		int nextBucket = getNextBucket(v, M, i);
+		if (HashTable[nextBucket] == 0) return -1;
+		else if (HashTable[nextBucket] == key) { printf("%d ", nextBucket); int elem = HashTable[nextBucket]; HashTable[nextBucket] = -1; return elem; }
+		else i++;
+	}
+}
+int main() {
+	int *HashTable = NULL; int M; scanf("%d", &M); getchar();
+	InitHashTable(&HashTable, M);
+	while (1) {
+		char ch; int key; scanf("%c", &ch);
+		switch (ch) {
+		case 'i': scanf("%d", &key); InsertItem(HashTable, M, key); break;
+		case 's': scanf("%d", &key); printf("%d\n", SearchKey(HashTable, M, key)); break;
+		case 'd': scanf("%d", &key); printf("%d\n", DeactivateKey(HashTable, M, key)); break;
+		case 'e': free(HashTable); return 0;
+		}
+		getchar();
+	}
+}*/
